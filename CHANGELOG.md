@@ -11,6 +11,16 @@ under `## [<version>]` when the tag `v<version>` is pushed).
   frames are lost (Harris: 15.5 % → 11.6 %; Motorola: 4.5 % → 3.6 % and 8.7 % → 6.7 %), and no call decodes worse, for
   about 0.2 % of a core more per open Phase 2 channel. It follows the bank's equaliser setting. See
   [research/p25-phase2-diversity.md](research/p25-phase2-diversity.md).
+- **Node health reports** (`docs/api/node-health.md`, draft): a common way for a recorder to tell a call-collecting
+  service (Broadcastify Calls, OpenMHz, …) how well it hears each node it uploads, every 5 minutes at a random point of
+  its own, so a service fed by several recorders for one system or channel can prefer the one hearing it best, and can
+  tell a recorder that's up but quiet from one that's down. Trunked sites: control channel time decoding, blocks decoded
+  and lost, share of its air decoded, SNR, phase error, calls announced and why any weren't recorded, voice frames lost
+  by codec. Conventional channels: time heard, open and closed, levels, calls and transmissions no row took. Radios:
+  dropped samples, clipping, frequency error. Counts, not scores: a service weighs them its own way.
+- **Plugins: the `health` topic** (SDK 0.12.0): those totals every 10 s, running since recording started. The SDK's
+  `health` module makes a node's report of them and keeps its schedule (random phase, jitter, a failed report's window
+  carried by the next, backing off when the service is busy, the interval the service asks for).
 
 ## [0.3.7] — 2026-11-13
 
